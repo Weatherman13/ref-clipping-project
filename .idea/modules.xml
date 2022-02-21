@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/.idea/RefClippingProject.iml" filepath="$PROJECT_DIR$/.idea/RefClippingProject.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Eureka/eureka.iml" filepath="$PROJECT_DIR$/Eureka/eureka.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Proxy/proxy.iml" filepath="$PROJECT_DIR$/Proxy/proxy.iml" />
+      <module fileurl="file://$PROJECT_DIR$/RefClippingService/ref_clipping_service.iml" filepath="$PROJECT_DIR$/RefClippingService/ref_clipping_service.iml" />
+    </modules>
+  </component>
+</project>

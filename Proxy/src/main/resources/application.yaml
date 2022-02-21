@@ -1,0 +1,31 @@
+eureka:
+  client:
+    service-url:
+      defaultZone: ${EUREKA_HOST:http://localhost:8761/eureka/}
+  instance:
+    instance-id: proxy-instance-${random.uuid}
+server:
+  port: 8080
+spring:
+  application:
+    name: proxy
+  cloud:
+    loadbalancer:
+      ribbon:
+        enabled: false
+    gateway:
+      routes:
+        - id: ref_clipping_service_route
+          uri: lb://ref-clipping-service
+          predicates:
+            - Path=/ref-clipping/**
+#          filters:
+#            - StripPrefix=1
+
+
+
+
+
+
+
+

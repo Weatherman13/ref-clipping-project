@@ -1,0 +1,22 @@
+server:
+  port: 8081
+eureka:
+  client:
+    service-url:
+      defaultZone: ${EUREKA_HOST:http://localhost:8761/eureka/}
+  instance:
+    instance-id: rc-service-instance-${random.uuid}
+spring:
+  kafka:
+    bootstrap-servers:
+  application:
+    name: ref-clipping-service
+  cloud:
+    loadbalancer:
+      ribbon:
+        enabled: false
+logging:
+  level:
+    ru:
+      thirteenth:
+        DEBUG

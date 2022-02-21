@@ -1,0 +1,17 @@
+services:
+  Eurica:
+    image: discovery
+    ports:
+      - 8761:8761
+    environment:
+      - EUREKA_HOST=http://eurica:8761/eureka/
+  Proxy:
+    image: proxytt
+    ports:
+      - 8080:8080
+    environment:
+      - EUREKA_HOST=http://eurica:8761/eureka/
+  RefClippingService:
+    image: rcservice
+    environment:
+      - EUREKA_HOST=http://eurica:8761/eureka/
