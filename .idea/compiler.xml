@@ -7,12 +7,14 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="ref_clipping_service" />
         <module name="proxy" />
+        <module name="API" />
+        <module name="ref_clipping_service" />
         <module name="eureka" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
+      <module name="API" target="13" />
       <module name="eureka" target="13" />
       <module name="proxy" target="13" />
       <module name="ref_clipping_service" target="13" />
@@ -20,6 +22,7 @@
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
+      <module name="API" options="-parameters" />
       <module name="eureka" options="-parameters" />
       <module name="proxy" options="-parameters" />
       <module name="ref_clipping_service" options="-parameters" />

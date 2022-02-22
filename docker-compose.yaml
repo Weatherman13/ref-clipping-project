@@ -15,3 +15,7 @@ services:
     image: rcservice
     environment:
       - EUREKA_HOST=http://eurica:8761/eureka/
+  API:
+    image: api
+    environment:
+      - EUREKA_HOST=http://eurica:8761/eureka/
