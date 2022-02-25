@@ -18,3 +18,14 @@ logging:
     ru:
       thirteenth:
         DEBUG
+kafka:
+  group:
+    id: group-id-${random.uuid}
+  server: localhost:9092
+  consumer:
+    auto-offset-reset: earliest
+    enable-auto-commit: false
+
+  properties:
+    reconnect.backoff.ms: 1000
+

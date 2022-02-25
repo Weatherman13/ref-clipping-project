@@ -7,6 +7,8 @@ eureka:
   instance:
     instance-id: api-instance-${random.uuid}
 spring:
+  kafka:
+    bootstrap-servers: localhost:9092
   application:
     name: api
   cloud:
@@ -18,3 +20,11 @@ logging:
     ru:
       thirteenth:
         DEBUG
+
+kafka:
+  producer:
+    id: producer-${random.uuid}
+  server: localhost:9092
+
+
+

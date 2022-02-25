@@ -1,9 +1,8 @@
 package ru.thirteenth.ref_clipping_service.controller;
 
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import ru.thirteenth.ref_clipping_service.entity.DefaultRef;
 
 import java.util.Random;
 
@@ -11,14 +10,17 @@ import java.util.Random;
 @Slf4j
 @RequestMapping("/ref-clipping")
 public class MainController {
-    Random random = new Random();
 
-    @GetMapping("/test1")
-    public String test(){
+
+    @PostMapping(value ="/test1", consumes = "application/json", produces = "application/json")
+    public DefaultRef test(@RequestBody DefaultRef defaultRef){
         log.debug("test1 is completed");
-        System.out.println(random.nextInt());
-        return "test1";
+
+
+        return defaultRef;
     }
+
+
     @GetMapping("/test2")
      public String test2(){
         log.debug("test2 is completed");
