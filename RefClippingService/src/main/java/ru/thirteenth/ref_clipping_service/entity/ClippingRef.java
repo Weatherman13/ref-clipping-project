@@ -11,15 +11,13 @@ import javax.persistence.*;
 @NoArgsConstructor
 
 @Entity
-@Table(name = "default_ref")
-public class DefaultRef extends Ref {
+@Table(name = "clipping_ref")
+public class ClippingRef extends Ref {
 
     @Column(name="url")
     private String url;
 
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name="clipping_ref_id")
-    private ClippingRef clippingRef;
 
-
+    @OneToOne(mappedBy = "clippingRef", cascade = CascadeType.ALL)
+    private DefaultRef defaultRef;
 }

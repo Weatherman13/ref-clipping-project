@@ -1,35 +1,19 @@
 package ru.thirteenth.ref_clipping_service.service;
 
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.kafka.annotation.EnableKafka;
-import org.springframework.kafka.annotation.KafkaListener;
-import org.springframework.kafka.core.KafkaTemplate;
-import org.springframework.stereotype.Service;
 import ru.thirteenth.ref_clipping_service.entity.DefaultRef;
 
-import java.util.Random;
+import java.util.List;
 
+public interface DefaultRefService {
+    public List<DefaultRef> getAll();
 
-@EnableKafka
-@Service
-public class DefaultRefService {
-    private final KafkaTemplate<Long, DefaultRef> kafkaTemplate;
-    public static final String GROUP_ID = "refClippingService";
+    public void save(DefaultRef ref);
 
+    public DefaultRef getById(int id);
 
+    public void deleteById(int id);
 
+    public void update(int id, DefaultRef newRef);
 
-    @Autowired
-    public DefaultRefService(KafkaTemplate<Long, DefaultRef> kafkaTemplate) {
-        this.kafkaTemplate = kafkaTemplate;
-    }
-
-    @KafkaListener(groupId = GROUP_ID,topics="Topic2", containerFactory = "singleFactory")
-    public void consume(DefaultRef dRef){
-        System.out.println(dRef.toString());
-    }
-
-
+    public void consume(DefaultRef dRef);
 }

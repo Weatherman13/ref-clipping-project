@@ -1,27 +1,42 @@
 server:
   port: 8081
+
 eureka:
   client:
     service-url:
       defaultZone: ${EUREKA_HOST:http://localhost:8761/eureka/}
   instance:
     instance-id: rc-service-instance-${random.uuid}
+
 spring:
   application:
     name: ref-clipping-service
+
+  datasource:
+    url: jdbc:mysql://localhost:3306/ref-clipping-project?useSSL=false&serverTimezone=UTC
+    username: borz0y
+    password: 58rjK[jP1
+  jpa:
+    generate-ddl: true
+
+
   cloud:
     loadbalancer:
       ribbon:
         enabled: false
+
 logging:
   level:
     ru:
       thirteenth:
         DEBUG
+
 kafka:
   group:
     id: group-id-${random.uuid}
+
   server: localhost:9092
+
   consumer:
     auto-offset-reset: earliest
     enable-auto-commit: false

@@ -36,7 +36,8 @@ public class ApiController {
         var refServiceAdress = URI.create("http://" + SERVICE_ID).resolve("/ref-clipping/test1");
 
         refService.send(ref);
-
+        System.out.println(ref.getCreated());
+        System.out.println(ref.getUpdated());
         System.out.println("In work");
         var result = restTemplate.postForObject(refServiceAdress,ref,DefaultRef.class);
 
