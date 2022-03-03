@@ -6,6 +6,10 @@
         <option value="$PROJECT_DIR$/Proxy/pom.xml" />
         <option value="$PROJECT_DIR$/Eureka/pom.xml" />
         <option value="$PROJECT_DIR$/RefClippingService/pom.xml" />
+        <option value="$PROJECT_DIR$/API/pom.xml" />
+        <option value="$PROJECT_DIR$/Bucket4j/pom.xml" />
+        <option value="$PROJECT_DIR$/RateLimitter/pom.xml" />
+        <option value="$PROJECT_DIR$/RateLimiter/pom.xml" />
       </list>
     </option>
   </component>
