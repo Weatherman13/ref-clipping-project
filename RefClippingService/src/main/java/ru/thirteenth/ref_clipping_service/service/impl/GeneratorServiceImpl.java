@@ -9,8 +9,8 @@ import ru.thirteenth.ref_clipping_service.service.GeneratorService;
 @Service
 public class GeneratorServiceImpl implements GeneratorService {
 
-    public String generate() { /*<---------Just generates a random STRING of a given value*/
-        var result = RandomStringUtils.random(8,true,true);
+    public String generate(int count) { /*<---------Just generates a random STRING of a given value*/
+        var result = RandomStringUtils.random(count,true,true);
         return result;
     }
 }

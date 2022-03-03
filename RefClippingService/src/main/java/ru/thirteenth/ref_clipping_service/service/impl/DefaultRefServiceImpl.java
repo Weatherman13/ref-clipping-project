@@ -7,12 +7,11 @@ import ru.thirteenth.ref_clipping_service.dao.DefaultRefRepository;
 import ru.thirteenth.ref_clipping_service.entity.DefaultRef;
 import ru.thirteenth.ref_clipping_service.exception.dao.ClippingRefNotFoundException;
 import ru.thirteenth.ref_clipping_service.exception.dao.DefaultRefNotFoundException;
-
-import java.util.UUID;
+import ru.thirteenth.ref_clipping_service.service.DefaultRefService;
 
 
 @Service
-public class DefaultRefServiceImpl {
+public class DefaultRefServiceImpl implements DefaultRefService {
 
 
     private DefaultRefRepository repository;
@@ -29,10 +28,9 @@ public class DefaultRefServiceImpl {
 
     public DefaultRef getDefaultRefByToken(String token){
         return repository.getDefaultRefByClientToken(token)
-                         .orElseThrow(()-> new DefaultRefNotFoundException(
-                                 "A standard link with such parameters was not found"));
+                         .orElseThrow(()->
+                                 new DefaultRefNotFoundException("A standard link with such parameters was not found"));
     }
-
 
     public Boolean existsByClientToken(String token){
         return repository.existsByClientToken(token);

@@ -1,6 +1,5 @@
 package ru.thirteenth.ref_clipping_service.controller;
 
-import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -9,8 +8,6 @@ import ru.thirteenth.ref_clipping_service.service.ClientService;
 import ru.thirteenth.ref_clipping_service.service.impl.ClippingRefServiceImpl;
 import ru.thirteenth.ref_clipping_service.service.impl.DefaultRefServiceImpl;
 import ru.thirteenth.ref_clipping_service.service.impl.GeneratorServiceImpl;
-
-import javax.servlet.http.HttpServletResponse;
 
 @RestController
 @Slf4j
@@ -35,7 +32,7 @@ public class MainController {
 
 
     @PostMapping(value = "/get-clip", consumes = "application/json", produces = "application/json")
-    public String getClipRef(@RequestBody DefaultUrl url) throws InterruptedException {
+    public String getClipRef(@RequestBody DefaultUrl url) {
 
         return clientService.getClippingRef(url);
     }

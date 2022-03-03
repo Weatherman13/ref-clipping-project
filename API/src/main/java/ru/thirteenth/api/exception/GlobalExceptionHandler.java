@@ -3,17 +3,14 @@ package ru.thirteenth.api.exception;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 import ru.thirteenth.api.entity.dao.ExceptionDetails;
 import ru.thirteenth.api.exception.dao.*;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.ValidationException;
 import java.net.MalformedURLException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-
 import static org.springframework.http.HttpStatus.*;
 
 @RestControllerAdvice
@@ -38,7 +35,7 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
             HttpServletRequest request,
             Exception exception)
     {
-        return createErrorResponse(request,BAD_REQUEST,exception);
+        return createErrorResponse(BAD_REQUEST,exception);
     }
 
     @ExceptionHandler(BlankException.class)
@@ -46,7 +43,7 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
             HttpServletRequest request,
             Exception exception)
     {
-        return createErrorResponse(request,BAD_REQUEST,exception);
+        return createErrorResponse(BAD_REQUEST,exception);
     }
 
     @ExceptionHandler(DefaultRefNotFoundException.class)
@@ -54,7 +51,7 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
             HttpServletRequest request,
             Exception exception)
     {
-        return createErrorResponse(request,NOT_ACCEPTABLE,exception);
+        return createErrorResponse(NOT_FOUND,exception);
     }
 
     @ExceptionHandler(ClippingRefNotFoundException.class)
@@ -62,7 +59,7 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
             HttpServletRequest request,
             Exception exception)
     {
-        return createErrorResponse(request,NOT_ACCEPTABLE,exception);
+        return createErrorResponse(NOT_FOUND,exception);
     }
 
     @ExceptionHandler(RequestTimeoutExceededException.class)
@@ -70,7 +67,7 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
             HttpServletRequest request,
             Exception exception)
     {
-        return createErrorResponse(request,SERVICE_UNAVAILABLE,exception);
+        return createErrorResponse(SERVICE_UNAVAILABLE,exception);
     }
 
     @ExceptionHandler(ExpiredLinkException.class)
@@ -78,13 +75,12 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
             HttpServletRequest request,
             Exception exception)
     {
-        return createErrorResponse(request,GONE,exception);
+        return createErrorResponse(GONE,exception);
     }
 
 
 
     private ResponseEntity<ExceptionDetails> createErrorResponse(
-            HttpServletRequest request,
             HttpStatus status,
             Exception exception)
     {

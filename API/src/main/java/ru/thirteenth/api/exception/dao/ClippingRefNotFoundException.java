@@ -1,6 +1,6 @@
 package ru.thirteenth.api.exception.dao;
 
-public class ClippingRefNotFoundException extends RuntimeException{
+public class ClippingRefNotFoundException extends RuntimeException {
     public ClippingRefNotFoundException(String message) {
         super(message);
     }

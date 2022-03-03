@@ -8,7 +8,6 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 import ru.thirteenth.ref_clipping_service.exception.dao.ClippingRefNotFoundException;
 import ru.thirteenth.ref_clipping_service.exception.dao.DefaultRefNotFoundException;
 import ru.thirteenth.ref_clipping_service.entity.dao.ExceptionDetails;
-import ru.thirteenth.ref_clipping_service.exception.dao.RequestTimeoutExceededException;
 
 import javax.servlet.http.HttpServletRequest;
 

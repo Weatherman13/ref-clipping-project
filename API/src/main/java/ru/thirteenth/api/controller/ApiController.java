@@ -1,6 +1,7 @@
 package ru.thirteenth.api.controller;
 
 import lombok.SneakyThrows;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -8,66 +9,46 @@ import org.springframework.web.client.RestTemplate;
 import ru.thirteenth.api.entity.dao.DefaultUrl;
 import ru.thirteenth.api.entity.dao.ExceptionDetails;
 import ru.thirteenth.api.entity.dao.StringResponse;
-import ru.thirteenth.api.service.impl.ClientService;
+import ru.thirteenth.api.service.ClientService;
+import ru.thirteenth.api.service.impl.ValidationService;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.ws.rs.core.Response;
-import java.io.IOException;
 import java.net.URI;
-import java.net.URISyntaxException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
 import static org.springframework.http.HttpStatus.BAD_REQUEST;
 
-
+@Slf4j
 @RestController
 @RequestMapping("/api")
 public class ApiController {
 
-    public static final URI GET_NEW_CLIP_REF = URI.create("http://ref-clipping-service/service/get-clip");
-    public static final URI GET_DEF_REF_BY_CLIP_REF = URI.create("http://ref-clipping-service/service/get-def-by-clip");
-
-
-    private final RestTemplate restTemplate;
-    private final ClientService refService;
+    private ClientService clientService;
 
     @Autowired
-    public ApiController(RestTemplate restTemplate,
-                         ClientService refService) {
-
-        this.restTemplate = restTemplate;
-        this.refService = refService;
+    public ApiController(ClientService clientService) {
+        this.clientService = clientService;
     }
 
-
+    @SneakyThrows
     @PostMapping(value = "/service/create",
                  consumes = "application/json",
                  produces = "application/json")
-    @SneakyThrows
     public StringResponse createNewClipRef(@RequestBody DefaultUrl url) {
-        refService.defValidation(url);
-        refService.send(url);
-        var result = restTemplate.postForObject(GET_NEW_CLIP_REF, url, String.class);
-        return new StringResponse(result);
-
+        return clientService.createClipRef(url);
     }
 
     @PostMapping(value = "/get-clip-ref")
     public StringResponse getClipRefByDefRef(@RequestBody DefaultUrl url){
-        refService.clipValidation(url.getUri());
-        var result = restTemplate.postForObject(GET_DEF_REF_BY_CLIP_REF, url, String.class);
-        return new StringResponse(result);
+        return clientService.getClipRefByDefRef(url);
     }
 
     @SneakyThrows
     @GetMapping(value = "/go-to/{clip-ref}")
-    public void redirect(@PathVariable("clip-ref") String clipRef, HttpServletResponse response) {
-        refService.clipValidation(clipRef);
-        DefaultUrl url = new DefaultUrl();
-        url.setUri(clipRef);
-        var result = restTemplate.postForObject(GET_DEF_REF_BY_CLIP_REF, url, String.class);
-        response.sendRedirect(result);
+        public void redirect(@PathVariable("clip-ref") String endpoint, HttpServletResponse response) {
+            String redirectUrl = clientService.redirect(endpoint);
+            response.sendRedirect(redirectUrl);
     }
 
 

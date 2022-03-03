@@ -4,14 +4,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ru.thirteenth.ref_clipping_service.dao.ClippingRefRepository;
 import ru.thirteenth.ref_clipping_service.entity.ClippingRef;
-import ru.thirteenth.ref_clipping_service.entity.DefaultRef;
 import ru.thirteenth.ref_clipping_service.exception.dao.ClippingRefNotFoundException;
+import ru.thirteenth.ref_clipping_service.service.ClippingRefService;
 
-
-import java.util.Optional;
 
 @Service
-public class ClippingRefServiceImpl {
+public class ClippingRefServiceImpl implements ClippingRefService {
     ClippingRefRepository repository;
 
     @Autowired

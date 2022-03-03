@@ -4,8 +4,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import ru.thirteenth.ref_clipping_service.entity.ClippingRef;
 import ru.thirteenth.ref_clipping_service.entity.DefaultRef;
 
-import java.time.LocalDateTime;
-import java.time.LocalTime;
 import java.util.Optional;
 
 public interface ClippingRefRepository extends JpaRepository<ClippingRef,Integer> {

@@ -1,16 +1,20 @@
 package ru.thirteenth.ref_clipping_service.service;
 
-//public interface DefaultRefService {
-//    public List<DefaultRef> getAll();
-//
-//    public void save(DefaultRef ref) ;
-//
-//    public DefaultRef getById(int id);
-//
-//    public void deleteById(int id);
-//
-//    public void update(int id, DefaultRef newRef);
-//
-//    public Boolean existsByUrl(String url);
-//
-//}
+import ru.thirteenth.ref_clipping_service.entity.DefaultRef;
+
+public interface DefaultRefService {
+
+    DefaultRef getById(Integer id);
+
+    DefaultRef getDefaultRefByToken(String token);
+
+
+    Boolean existsByClientToken(String token);
+
+    void save(DefaultRef ref);
+
+    Boolean existsByUrl(String url);
+
+    DefaultRef getDefaultRefByClipRef_Url(String url);
+
+}
