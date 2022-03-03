@@ -1,6 +1,7 @@
 package ru.thirteenth.api.config;
 
 import org.apache.kafka.clients.admin.NewTopic;
+import org.hibernate.validator.internal.constraintvalidators.hv.URLValidator;
 import org.springframework.cloud.client.loadbalancer.LoadBalanced;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -25,4 +26,6 @@ public class ApiConfig {
     public RestTemplate restTemplate(){
         return new RestTemplate();
     }
+
+
 }

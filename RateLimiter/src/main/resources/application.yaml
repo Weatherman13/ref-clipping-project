@@ -1,0 +1,23 @@
+eureka:
+  client:
+    service-url:
+      defaultZone: ${EUREKA_HOST:http://localhost:8761/eureka/}
+  instance:
+    instance-id: rate-limiter-instance
+server:
+  port: 8089
+
+spring:
+  application:
+    name: rate-limiter
+
+  cloud:
+    loadbalancer:
+      ribbon:
+        enabled: false
+
+logging:
+  level:
+    ru:
+      thirteenth:
+        DEBUG
