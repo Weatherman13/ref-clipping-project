@@ -4,6 +4,7 @@ import lombok.SneakyThrows;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ru.thirteenth.ref_clipping_service.entity.dao.DefaultUrl;
+import ru.thirteenth.ref_clipping_service.exception.dao.RequestTimeoutExceededException;
 import ru.thirteenth.ref_clipping_service.service.impl.ClippingRefServiceImpl;
 import ru.thirteenth.ref_clipping_service.service.impl.DefaultRefServiceImpl;
 
@@ -14,7 +15,7 @@ public class ClientService implements GetClippingRefService, GetDefRefByClipRef 
 
     @Autowired
     public ClientService(DefaultRefServiceImpl defRepository,
-                         ClippingRefServiceImpl clipRepository) 
+                         ClippingRefServiceImpl clipRepository)
     {
         this.defRepository = defRepository;
         this.clipRepository = clipRepository;
@@ -29,7 +30,7 @@ public class ClientService implements GetClippingRefService, GetDefRefByClipRef 
                 break;
             }
             counter++;
-            if (counter >=10) throw new Exception("Request timeout exceeded, try again later");
+            if (counter >=10) throw new RequestTimeoutExceededException("Request timeout exceeded, try again later");
             Thread.sleep(1000);
         }
         return defRepository.getDefaultRefByToken(uri.getClientToken().toString())
@@ -38,7 +39,8 @@ public class ClientService implements GetClippingRefService, GetDefRefByClipRef 
     }
 
     @Override
-    public String getDefByClip(String defUrl) {
-        return defRepository.getDefaultRefByClipRef_Url(defUrl).getUrl();
+    public String getDefByClip(String clipUrl) {
+        var ref = defRepository.getDefaultRefByClipRef_Url(clipUrl);
+        return ref.getUrl();
     }
 }

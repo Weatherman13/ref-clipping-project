@@ -43,14 +43,9 @@ public class MainController {
 
     @PostMapping(value = "/get-def-by-clip", consumes = "application/json", produces = "application/json")
     public String getDefRefByClipRef(@RequestBody DefaultUrl url) {
+
         return clientService.getDefByClip(url.getUri());
     }
 
-//    @SneakyThrows
-//    @PostMapping(value = "/redirect", consumes = "application/json", produces = "application/json")
-//    public void redirect(HttpServletResponse response, @RequestBody DefaultUrl url){
-//        System.out.println(url.getUri());
-////        response.sendRedirect("https://www.google.com/");
-//    }
 
 }

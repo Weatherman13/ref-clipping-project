@@ -9,6 +9,7 @@ import org.springframework.web.client.RestTemplate;
 import ru.thirteenth.ref_clipping_service.entity.ClippingRef;
 import ru.thirteenth.ref_clipping_service.entity.DefaultRef;
 import ru.thirteenth.ref_clipping_service.entity.dao.DefaultUrl;
+import ru.thirteenth.ref_clipping_service.exception.dao.RequestTimeoutExceededException;
 import ru.thirteenth.ref_clipping_service.service.impl.DefaultRefServiceImpl;
 import ru.thirteenth.ref_clipping_service.service.impl.GeneratorServiceImpl;
 
@@ -29,8 +30,7 @@ public class ConsumerService {
     public ConsumerService(KafkaTemplate<Long, DefaultUrl> kafkaTemplate,
                            RestTemplate restTemplate,
                            GeneratorServiceImpl generatorService,
-                           DefaultRefServiceImpl defRepository)
-    {
+                           DefaultRefServiceImpl defRepository) {
         this.kafkaTemplate = kafkaTemplate;
         this.restTemplate = restTemplate;
         this.generatorService = generatorService;
@@ -38,23 +38,27 @@ public class ConsumerService {
     }
 
 
-
-    @KafkaListener(groupId = GROUP_ID,topics="Topic2", containerFactory = "singleFactory")
+    @KafkaListener(groupId = GROUP_ID, topics = "Topic2", containerFactory = "singleFactory")
     public void consume(DefaultUrl uri) throws InterruptedException {
 
         while (true) {
+            int counter = 0;
             var result = restTemplate.getForObject(GET_TO_RATE_LIMITER, Boolean.class);
             if (result) {
                 saveToDatabase(uri);
                 break;
+            } else {
+                counter++;
+                if (counter >= 7)
+                    throw new RequestTimeoutExceededException("Request timeout exceeded, try again later");
+                Thread.sleep(2000);
             }
-            else Thread.sleep(10000);
         }
 
     }
 
 
-    public void saveToDatabase (DefaultUrl uri){
+    public void saveToDatabase(DefaultUrl uri) {
         DefaultRef defaultRef = new DefaultRef(uri.getUri(), uri.getClientToken().toString());
         ClippingRef clippingRef = new ClippingRef(generatorService.generate());
         defaultRef.setClippingRef(clippingRef);

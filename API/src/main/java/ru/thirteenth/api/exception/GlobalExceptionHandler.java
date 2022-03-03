@@ -6,10 +6,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 import ru.thirteenth.api.entity.dao.ExceptionDetails;
-import ru.thirteenth.api.exception.dao.BlankException;
-import ru.thirteenth.api.exception.dao.ClippingRefNotFoundException;
-import ru.thirteenth.api.exception.dao.DefaultRefNotFoundException;
-import ru.thirteenth.api.exception.dao.RequestTimeoutExceededException;
+import ru.thirteenth.api.exception.dao.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.ValidationException;
@@ -74,6 +71,14 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
             Exception exception)
     {
         return createErrorResponse(request,SERVICE_UNAVAILABLE,exception);
+    }
+
+    @ExceptionHandler(ExpiredLinkException.class)
+    public ResponseEntity<ExceptionDetails>handleExpiredLinkException(
+            HttpServletRequest request,
+            Exception exception)
+    {
+        return createErrorResponse(request,GONE,exception);
     }
 
 

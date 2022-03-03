@@ -9,4 +9,8 @@ public interface ClippingRefRepository extends JpaRepository<ClippingRef,Integer
 
     Boolean existsClippingRefByUrl(String url);
 
+    Optional<ClippingRef> findByDefaultRef_Url(String url);
+
+    Optional<ClippingRef> findByUrl(String url);
+
 }

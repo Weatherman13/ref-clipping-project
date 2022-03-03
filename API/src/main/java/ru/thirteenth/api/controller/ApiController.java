@@ -27,7 +27,6 @@ public class ApiController {
 
     public static final URI GET_NEW_CLIP_REF = URI.create("http://ref-clipping-service/service/get-clip");
     public static final URI GET_DEF_REF_BY_CLIP_REF = URI.create("http://ref-clipping-service/service/get-def-by-clip");
-    public static final URI REDIRECT = URI.create("http://ref-clipping-service/service/get-def-by-clip");
 
 
     private final RestTemplate restTemplate;
@@ -56,7 +55,7 @@ public class ApiController {
 
     @PostMapping(value = "/get-clip-ref")
     public StringResponse getClipRefByDefRef(@RequestBody DefaultUrl url){
-        refService.clipValidation(url);
+        refService.clipValidation(url.getUri());
         var result = restTemplate.postForObject(GET_DEF_REF_BY_CLIP_REF, url, String.class);
         return new StringResponse(result);
     }
@@ -64,6 +63,7 @@ public class ApiController {
     @SneakyThrows
     @GetMapping(value = "/go-to/{clip-ref}")
     public void redirect(@PathVariable("clip-ref") String clipRef, HttpServletResponse response) {
+        refService.clipValidation(clipRef);
         DefaultUrl url = new DefaultUrl();
         url.setUri(clipRef);
         var result = restTemplate.postForObject(GET_DEF_REF_BY_CLIP_REF, url, String.class);

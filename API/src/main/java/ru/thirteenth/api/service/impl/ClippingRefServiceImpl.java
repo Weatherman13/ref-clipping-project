@@ -3,6 +3,8 @@ package ru.thirteenth.api.service.impl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ru.thirteenth.api.dao.ClippingRefRepository;
+import ru.thirteenth.api.entity.ClippingRef;
+import ru.thirteenth.api.exception.dao.ClippingRefNotFoundException;
 import ru.thirteenth.api.service.ClippingRefService;
 
 
@@ -19,6 +21,16 @@ public class ClippingRefServiceImpl implements ClippingRefService {
     @Override
     public Boolean existsClippingRefByUrl(String url){
         return repository.existsClippingRefByUrl(url);
+    }
+
+    public ClippingRef getByDefaultRef_Url(String url){
+        return repository.findByDefaultRef_Url(url)
+                .orElseThrow(()-> new ClippingRefNotFoundException("Short link not found"));
+    }
+
+    public ClippingRef getByUrl(String url){
+        return repository.findByUrl(url)
+                .orElseThrow(()-> new ClippingRefNotFoundException("Short link not found"));
     }
 
 

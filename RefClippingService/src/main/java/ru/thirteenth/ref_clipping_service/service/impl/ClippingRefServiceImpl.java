@@ -20,16 +20,15 @@ public class ClippingRefServiceImpl {
     }
 
 
-    public void save(ClippingRef ref) {
-        repository.save(ref);
+
+    public ClippingRef getByDefaultRef_Url(String url){
+        return repository.findByDefaultRef_Url(url)
+                .orElseThrow(()-> new ClippingRefNotFoundException("Short link not found"));
     }
 
-    public Optional<ClippingRef> getByDefaultRef(DefaultRef ref){
-        return repository.getByDefaultRef(ref);
-    }
-
-    public ClippingRef getById(int id){
-        return repository.getById(id);
+    public ClippingRef getByUrl(String url){
+        return repository.findByUrl(url)
+                .orElseThrow(()-> new ClippingRefNotFoundException("Short link not found"));
     }
 
 
