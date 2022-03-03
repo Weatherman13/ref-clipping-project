@@ -22,6 +22,8 @@ public interface DefaultRefRepository extends JpaRepository<DefaultRef, Integer>
 
     DefaultRef getById(Integer id);
 
+    Optional<DefaultRef> findDefaultRefByClippingRef_Url(String url);
+
 
 
 

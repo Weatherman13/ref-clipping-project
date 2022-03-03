@@ -1,19 +1,16 @@
 package ru.thirteenth.ref_clipping_service.controller;
 
+import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import ru.thirteenth.ref_clipping_service.entity.ClippingRef;
-import ru.thirteenth.ref_clipping_service.entity.DefaultRef;
-import ru.thirteenth.ref_clipping_service.entity.dao.DefaultUri;
+import ru.thirteenth.ref_clipping_service.entity.dao.DefaultUrl;
 import ru.thirteenth.ref_clipping_service.service.ClientService;
 import ru.thirteenth.ref_clipping_service.service.impl.ClippingRefServiceImpl;
 import ru.thirteenth.ref_clipping_service.service.impl.DefaultRefServiceImpl;
 import ru.thirteenth.ref_clipping_service.service.impl.GeneratorServiceImpl;
 
-import java.util.UUID;
+import javax.servlet.http.HttpServletResponse;
 
 @RestController
 @Slf4j
@@ -38,17 +35,22 @@ public class MainController {
 
 
     @PostMapping(value = "/get-clip", consumes = "application/json", produces = "application/json")
-    public String getClipRef(@RequestBody DefaultUri url) throws InterruptedException {
+    public String getClipRef(@RequestBody DefaultUrl url) throws InterruptedException {
 
         return clientService.getClippingRef(url);
     }
 
 
     @PostMapping(value = "/get-def-by-clip", consumes = "application/json", produces = "application/json")
-    public String getDefRefByClipRef(String defUrl) {
-        return clientService.getDefByClip(defUrl);
+    public String getDefRefByClipRef(@RequestBody DefaultUrl url) {
+        return clientService.getDefByClip(url.getUri());
     }
 
-
+//    @SneakyThrows
+//    @PostMapping(value = "/redirect", consumes = "application/json", produces = "application/json")
+//    public void redirect(HttpServletResponse response, @RequestBody DefaultUrl url){
+//        System.out.println(url.getUri());
+////        response.sendRedirect("https://www.google.com/");
+//    }
 
 }

@@ -8,8 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 import ru.thirteenth.ref_clipping_service.entity.ClippingRef;
 import ru.thirteenth.ref_clipping_service.entity.DefaultRef;
-import ru.thirteenth.ref_clipping_service.entity.dao.DefaultUri;
-import ru.thirteenth.ref_clipping_service.service.impl.ClippingRefServiceImpl;
+import ru.thirteenth.ref_clipping_service.entity.dao.DefaultUrl;
 import ru.thirteenth.ref_clipping_service.service.impl.DefaultRefServiceImpl;
 import ru.thirteenth.ref_clipping_service.service.impl.GeneratorServiceImpl;
 
@@ -21,13 +20,13 @@ import java.net.URI;
 public class ConsumerService {
     public static final URI GET_TO_RATE_LIMITER = URI.create("http://rate-limiter/rate-limit/getToken");
     public static final String GROUP_ID = "refClippingService";
-    private final KafkaTemplate<Long, DefaultUri> kafkaTemplate;
+    private final KafkaTemplate<Long, DefaultUrl> kafkaTemplate;
     private final RestTemplate restTemplate;
     private GeneratorServiceImpl generatorService;
     private DefaultRefServiceImpl defRepository;
 
     @Autowired
-    public ConsumerService(KafkaTemplate<Long, DefaultUri> kafkaTemplate,
+    public ConsumerService(KafkaTemplate<Long, DefaultUrl> kafkaTemplate,
                            RestTemplate restTemplate,
                            GeneratorServiceImpl generatorService,
                            DefaultRefServiceImpl defRepository)
@@ -41,7 +40,7 @@ public class ConsumerService {
 
 
     @KafkaListener(groupId = GROUP_ID,topics="Topic2", containerFactory = "singleFactory")
-    public void consume(DefaultUri uri) throws InterruptedException {
+    public void consume(DefaultUrl uri) throws InterruptedException {
 
         while (true) {
             var result = restTemplate.getForObject(GET_TO_RATE_LIMITER, Boolean.class);
@@ -55,7 +54,7 @@ public class ConsumerService {
     }
 
 
-    public void saveToDatabase (DefaultUri uri){
+    public void saveToDatabase (DefaultUrl uri){
         DefaultRef defaultRef = new DefaultRef(uri.getUri(), uri.getClientToken().toString());
         ClippingRef clippingRef = new ClippingRef(generatorService.generate());
         defaultRef.setClippingRef(clippingRef);

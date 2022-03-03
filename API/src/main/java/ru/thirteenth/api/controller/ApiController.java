@@ -5,17 +5,20 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
-import ru.thirteenth.api.entity.dao.DefaultUri;
+import ru.thirteenth.api.entity.dao.DefaultUrl;
 import ru.thirteenth.api.entity.dao.ExceptionDetails;
 import ru.thirteenth.api.entity.dao.StringResponse;
-import ru.thirteenth.api.service.impl.DefaultUriServiceImpl;
+import ru.thirteenth.api.service.impl.ClientService;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.ws.rs.core.Response;
+import java.io.IOException;
 import java.net.URI;
+import java.net.URISyntaxException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
 import static org.springframework.http.HttpStatus.BAD_REQUEST;
-import static org.springframework.http.HttpStatus.OK;
 
 
 @RestController
@@ -23,15 +26,16 @@ import static org.springframework.http.HttpStatus.OK;
 public class ApiController {
 
     public static final URI GET_NEW_CLIP_REF = URI.create("http://ref-clipping-service/service/get-clip");
-    public static final URI GET_DEF_REF_BY_CLIP_REF = URI.create("http://ref-clipping-service/service//get-def-by-clip");
+    public static final URI GET_DEF_REF_BY_CLIP_REF = URI.create("http://ref-clipping-service/service/get-def-by-clip");
+    public static final URI REDIRECT = URI.create("http://ref-clipping-service/service/get-def-by-clip");
 
 
     private final RestTemplate restTemplate;
-    private final DefaultUriServiceImpl refService;
+    private final ClientService refService;
 
     @Autowired
     public ApiController(RestTemplate restTemplate,
-                         DefaultUriServiceImpl refService) {
+                         ClientService refService) {
 
         this.restTemplate = restTemplate;
         this.refService = refService;
@@ -42,8 +46,8 @@ public class ApiController {
                  consumes = "application/json",
                  produces = "application/json")
     @SneakyThrows
-    public StringResponse createNewClipRef(@RequestBody DefaultUri url) {
-        refService.validation(url);
+    public StringResponse createNewClipRef(@RequestBody DefaultUrl url) {
+        refService.defValidation(url);
         refService.send(url);
         var result = restTemplate.postForObject(GET_NEW_CLIP_REF, url, String.class);
         return new StringResponse(result);
@@ -51,10 +55,22 @@ public class ApiController {
     }
 
     @PostMapping(value = "/get-clip-ref")
-    public StringResponse getClipRefByDefRef(@RequestBody DefaultUri url){
+    public StringResponse getClipRefByDefRef(@RequestBody DefaultUrl url){
+        refService.clipValidation(url);
         var result = restTemplate.postForObject(GET_DEF_REF_BY_CLIP_REF, url, String.class);
         return new StringResponse(result);
     }
+
+    @SneakyThrows
+    @GetMapping(value = "/go-to/{clip-ref}")
+    public void redirect(@PathVariable("clip-ref") String clipRef, HttpServletResponse response) {
+        DefaultUrl url = new DefaultUrl();
+        url.setUri(clipRef);
+        var result = restTemplate.postForObject(GET_DEF_REF_BY_CLIP_REF, url, String.class);
+        response.sendRedirect(result);
+    }
+
+
 
 
     @ExceptionHandler(NullPointerException.class)

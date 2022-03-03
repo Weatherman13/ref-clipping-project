@@ -10,7 +10,7 @@ import java.util.UUID;
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
-public class DefaultUri {
+public class DefaultUrl {
 
 
     private String uri;

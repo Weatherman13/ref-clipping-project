@@ -10,7 +10,7 @@ import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.kafka.core.ProducerFactory;
 import org.springframework.kafka.support.converter.StringJsonMessageConverter;
 import org.springframework.kafka.support.serializer.JsonSerializer;
-import ru.thirteenth.api.entity.dao.DefaultUri;
+import ru.thirteenth.api.entity.dao.DefaultUrl;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -34,13 +34,13 @@ public class KafkaProducerConfig {
     }
 
     @Bean
-    public ProducerFactory<Long, DefaultUri> producerDefRefFactory() {
+    public ProducerFactory<Long, DefaultUrl> producerDefRefFactory() {
         return new DefaultKafkaProducerFactory<>(producerConfigs());
     }
 
     @Bean
-    public KafkaTemplate<Long, DefaultUri> kafkaTemplate() {
-        KafkaTemplate<Long, DefaultUri> template = new KafkaTemplate<>(producerDefRefFactory());
+    public KafkaTemplate<Long, DefaultUrl> kafkaTemplate() {
+        KafkaTemplate<Long, DefaultUrl> template = new KafkaTemplate<>(producerDefRefFactory());
         template.setMessageConverter(new StringJsonMessageConverter());
         return template;
     }

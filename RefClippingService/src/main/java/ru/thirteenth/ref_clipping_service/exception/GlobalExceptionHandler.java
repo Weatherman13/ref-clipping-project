@@ -36,15 +36,6 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
         return createErrorResponse(request,NOT_ACCEPTABLE,exception);
     }
 
-    @ExceptionHandler(RequestTimeoutExceededException.class)
-    public ResponseEntity<ExceptionDetails>handleRequestTimeoutExceededException(
-            HttpServletRequest request,
-            Exception exception)
-    {
-        return createErrorResponse(request,SERVICE_UNAVAILABLE,exception);
-    }
-
-
 
 
 

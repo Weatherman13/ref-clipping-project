@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ru.thirteenth.ref_clipping_service.dao.DefaultRefRepository;
 import ru.thirteenth.ref_clipping_service.entity.DefaultRef;
+import ru.thirteenth.ref_clipping_service.exception.dao.ClippingRefNotFoundException;
 import ru.thirteenth.ref_clipping_service.exception.dao.DefaultRefNotFoundException;
 
 import java.util.UUID;
@@ -43,6 +44,11 @@ public class DefaultRefServiceImpl {
 
     public Boolean existsByUrl(String url) {
         return repository.existsByUrl(url);
+    }
+
+    public DefaultRef getDefaultRefByClipRef_Url(String url){
+        return repository.findDefaultRefByClippingRef_Url(url)
+                .orElseThrow(()->new ClippingRefNotFoundException("No such link was found"));
     }
 
 

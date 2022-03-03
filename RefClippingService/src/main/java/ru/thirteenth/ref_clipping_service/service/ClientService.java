@@ -3,10 +3,9 @@ package ru.thirteenth.ref_clipping_service.service;
 import lombok.SneakyThrows;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import ru.thirteenth.ref_clipping_service.entity.dao.DefaultUri;
+import ru.thirteenth.ref_clipping_service.entity.dao.DefaultUrl;
 import ru.thirteenth.ref_clipping_service.service.impl.ClippingRefServiceImpl;
 import ru.thirteenth.ref_clipping_service.service.impl.DefaultRefServiceImpl;
-import ru.thirteenth.ref_clipping_service.service.impl.GeneratorServiceImpl;
 
 @Service
 public class ClientService implements GetClippingRefService, GetDefRefByClipRef {
@@ -23,7 +22,7 @@ public class ClientService implements GetClippingRefService, GetDefRefByClipRef 
 
     @SneakyThrows
     @Override
-    public String getClippingRef(DefaultUri uri) {
+    public String getClippingRef(DefaultUrl uri) {
         while (true) {    /* <--------Check whether the short link has been added to the database or not*/
             int counter = 0;
             if (defRepository.existsByClientToken(uri.getClientToken().toString())) {
@@ -40,6 +39,6 @@ public class ClientService implements GetClippingRefService, GetDefRefByClipRef 
 
     @Override
     public String getDefByClip(String defUrl) {
-        return null;
+        return defRepository.getDefaultRefByClipRef_Url(defUrl).getUrl();
     }
 }

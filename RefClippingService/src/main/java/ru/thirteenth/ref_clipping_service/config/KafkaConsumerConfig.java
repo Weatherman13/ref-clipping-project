@@ -14,8 +14,7 @@ import org.springframework.kafka.core.ConsumerFactory;
 import org.springframework.kafka.core.DefaultKafkaConsumerFactory;
 import org.springframework.kafka.support.converter.BatchMessagingMessageConverter;
 import org.springframework.kafka.support.converter.StringJsonMessageConverter;
-import ru.thirteenth.ref_clipping_service.entity.DefaultRef;
-import ru.thirteenth.ref_clipping_service.entity.dao.DefaultUri;
+import ru.thirteenth.ref_clipping_service.entity.dao.DefaultUrl;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -36,7 +35,7 @@ public class KafkaConsumerConfig {
 
     @Bean
     public KafkaListenerContainerFactory<?> batchFactory() {
-        ConcurrentKafkaListenerContainerFactory<Long, DefaultUri> factory =
+        ConcurrentKafkaListenerContainerFactory<Long, DefaultUrl> factory =
                 new ConcurrentKafkaListenerContainerFactory<>();
         factory.setConsumerFactory(consumerFactory());
         factory.setBatchListener(true);
@@ -46,7 +45,7 @@ public class KafkaConsumerConfig {
 
     @Bean
     public KafkaListenerContainerFactory<?> singleFactory() {
-        ConcurrentKafkaListenerContainerFactory<Long, DefaultUri> factory =
+        ConcurrentKafkaListenerContainerFactory<Long, DefaultUrl> factory =
                 new ConcurrentKafkaListenerContainerFactory<>();
         factory.setConsumerFactory(consumerFactory());
         factory.setBatchListener(false);
@@ -55,7 +54,7 @@ public class KafkaConsumerConfig {
     }
 
     @Bean
-    public ConsumerFactory<Long, DefaultUri> consumerFactory() {
+    public ConsumerFactory<Long, DefaultUrl> consumerFactory() {
         return new DefaultKafkaConsumerFactory<>(consumerConfigs());
     }
 
