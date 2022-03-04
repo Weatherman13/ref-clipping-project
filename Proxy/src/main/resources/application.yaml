@@ -16,9 +16,9 @@ spring:
     gateway:
       routes:
         - id: ref_clipping_service_route
-          uri: lb://ref-clipping-service
+          uri: lb://api
           predicates:
-            - Path=/ref-clipping/**
+            - Path=/api/**
 #          filters:
 #            - StripPrefix=1
 

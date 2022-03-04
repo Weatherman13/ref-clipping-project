@@ -1,28 +1,42 @@
 package ru.thirteenth.ref_clipping_service.controller;
 
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-
-import java.util.Random;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
+import ru.thirteenth.ref_clipping_service.entity.dao.DefaultUrl;
+import ru.thirteenth.ref_clipping_service.service.ClientService;
+import ru.thirteenth.ref_clipping_service.service.impl.ClippingRefServiceImpl;
+import ru.thirteenth.ref_clipping_service.service.impl.DefaultRefServiceImpl;
+import ru.thirteenth.ref_clipping_service.service.impl.GeneratorServiceImpl;
 
 @RestController
 @Slf4j
-@RequestMapping("/ref-clipping")
+@RequestMapping("/service")
 public class MainController {
-    Random random = new Random();
 
-    @GetMapping("/test1")
-    public String test(){
-        log.debug("test1 is completed");
-        System.out.println(random.nextInt());
-        return "test1";
+
+    private ClientService clientService;
+
+    @Autowired
+    public MainController(
+            ClientService clientService) {
+        this.clientService = clientService;
+
     }
-    @GetMapping("/test2")
-     public String test2(){
-        log.debug("test2 is completed");
-        return "test2";
+
+
+    @PostMapping(value = "/get-clip", consumes = "application/json", produces = "application/json")
+    public String getClipRef(@RequestBody DefaultUrl url) {
+
+        return clientService.getClippingRef(url);
     }
+
+
+    @PostMapping(value = "/get-def-by-clip", consumes = "application/json", produces = "application/json")
+    public String getDefRefByClipRef(@RequestBody DefaultUrl url) {
+
+        return clientService.getDefByClip(url.getUrl());
+    }
+
 
 }

@@ -7,6 +7,20 @@ eureka:
   instance:
     instance-id: api-instance-${random.uuid}
 spring:
+  datasource:
+    url: jdbc:mysql://localhost:3306/ref-clipping-project?useSSL=false&serverTimezone=UTC
+    username: borz0y
+    password: 58rjK[jP1
+  jpa:
+    generate-ddl: true
+
+
+
+
+
+
+  kafka:
+    bootstrap-servers: localhost:9092
   application:
     name: api
   cloud:
@@ -18,3 +32,12 @@ logging:
     ru:
       thirteenth:
         DEBUG
+
+kafka:
+  producer:
+    id: producer-${random.uuid}
+  server: localhost:9092
+  key: ${random.long}
+
+
+
