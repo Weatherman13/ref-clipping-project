@@ -13,6 +13,6 @@ import java.util.UUID;
 public class DefaultUrl {
 
 
-    private String uri;
+    private String url;
     private UUID clientToken;
 }

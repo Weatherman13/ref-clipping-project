@@ -14,20 +14,14 @@ import ru.thirteenth.ref_clipping_service.service.impl.GeneratorServiceImpl;
 @RequestMapping("/service")
 public class MainController {
 
-    private DefaultRefServiceImpl defRepository;
-    private ClippingRefServiceImpl clipRepository;
-    private GeneratorServiceImpl generatorService;
+
     private ClientService clientService;
 
     @Autowired
-    public MainController(DefaultRefServiceImpl defRepository,
-                          ClippingRefServiceImpl clipRepository,
-                          GeneratorServiceImpl generatorService,
-                          ClientService clientService) {
+    public MainController(
+            ClientService clientService) {
         this.clientService = clientService;
-        this.defRepository = defRepository;
-        this.clipRepository = clipRepository;
-        this.generatorService = generatorService;
+
     }
 
 
@@ -41,7 +35,7 @@ public class MainController {
     @PostMapping(value = "/get-def-by-clip", consumes = "application/json", produces = "application/json")
     public String getDefRefByClipRef(@RequestBody DefaultUrl url) {
 
-        return clientService.getDefByClip(url.getUri());
+        return clientService.getDefByClip(url.getUrl());
     }
 
 

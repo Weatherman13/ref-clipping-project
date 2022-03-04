@@ -48,9 +48,9 @@ public class ValidationService implements KafkaProducer {
     @SneakyThrows
     public void defValidation(DefaultUrl uri) {                               /*<------Validates a standard link*/
 
-        if (uri.getUri().isBlank() || uri.getUri().isEmpty())
+        if (uri.getUrl().isBlank() || uri.getUrl().isEmpty())
             throw new BlankException("The 'url' field must not be empty or null");
-        URL url = new URL(uri.getUri());                                        /*Checking if our URL string is*/
+        URL url = new URL(uri.getUrl());                                        /*Checking if our URL string is*/
 
         uri.setClientToken(UUID.randomUUID());   /*We generate a unique client token by which our specific URL can be found*/
     }

@@ -14,7 +14,7 @@ public class ApiConfig {
     public NewTopic topic1() {
         return TopicBuilder.name("Topic2")
                 .replicas(1)
-                .partitions(3)
+                .partitions(10)
                 .compact()
                 .build();
     }

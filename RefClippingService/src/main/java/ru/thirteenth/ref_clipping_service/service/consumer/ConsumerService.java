@@ -63,7 +63,7 @@ public class ConsumerService {
 
     public void saveToDatabase(DefaultUrl uri) {
         var clipRefUrl = "http://localhost:8080/api/go-to/"+ generatorService.generate(8);
-        DefaultRef defaultRef = new DefaultRef(uri.getUri(), uri.getClientToken().toString());
+        DefaultRef defaultRef = new DefaultRef(uri.getUrl(), uri.getClientToken().toString());
         ClippingRef clippingRef = new ClippingRef(clipRefUrl);
         defaultRef.setClippingRef(clippingRef);
         clippingRef.setDefaultRef(defaultRef);
