@@ -8,15 +8,17 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Service;
-import ru.thirteenth.api.entity.dao.DefaultUrl;
-import ru.thirteenth.api.exception.dao.BlankException;
-import ru.thirteenth.api.exception.dao.ClippingRefNotFoundException;
-import ru.thirteenth.api.exception.dao.ExpiredLinkException;
+import ru.thirteenth.api.entity.dto.DefaultUrl;
+import ru.thirteenth.api.exception.dto.BlankException;
+import ru.thirteenth.api.exception.dto.ExpiredLinkException;
+import ru.thirteenth.api.exception.dto.RefNotFoundException;
 import ru.thirteenth.api.service.KafkaProducer;
 
 
+import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.UUID;
+
 @Slf4j
 @Service
 public class ValidationService implements KafkaProducer {
@@ -48,22 +50,23 @@ public class ValidationService implements KafkaProducer {
     @SneakyThrows
     public void defValidation(DefaultUrl uri) {                               /*<------Validates a standard link*/
 
+        if (uri.getUrl() == null) throw new BlankException("The 'url' field must not be null");
         if (uri.getUrl().isBlank() || uri.getUrl().isEmpty())
-            throw new BlankException("The 'url' field must not be empty or null");
+            throw new BlankException("The 'url' field must not be empty");
         URL url = new URL(uri.getUrl());                                        /*Checking if our URL string is*/
 
         uri.setClientToken(UUID.randomUUID());   /*We generate a unique client token by which our specific URL can be found*/
     }
 
-    @SneakyThrows
-    public void clipValidation(String url) {                               /*<-------Validates a short link*/
 
+    public void clipValidation(String url) {                               /*<-------Validates a short link*/
+        if (url == null) throw new BlankException("The 'url' field must not be null");
         if (url.isBlank() || url.isEmpty()) {
-            throw new BlankException("The 'url' field must not be empty or null");
+            throw new BlankException("The 'url' field must not be empty");
         }
 
         if (!clipRepository.existsClippingRefByUrl(url))
-            throw new ClippingRefNotFoundException("Such a short link was not found");
+            throw new RefNotFoundException("Such a short link was not found");
 
         if (expirationDateChecker.checkingExpirationDate(url)) {
             throw new ExpiredLinkException("Short link expired");

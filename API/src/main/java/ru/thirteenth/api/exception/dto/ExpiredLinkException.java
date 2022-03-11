@@ -1,4 +1,4 @@
-package ru.thirteenth.api.exception.dao;
+package ru.thirteenth.api.exception.dto;
 
 public class ExpiredLinkException extends RuntimeException{
     public ExpiredLinkException(String message) {

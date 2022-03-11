@@ -1,11 +1,12 @@
 package ru.thirteenth.api.service;
 
+import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
-import ru.thirteenth.api.entity.dao.DefaultUrl;
-import ru.thirteenth.api.entity.dao.StringResponse;
+import ru.thirteenth.api.entity.dto.DefaultUrl;
+import ru.thirteenth.api.entity.dto.StringResponse;
 import ru.thirteenth.api.service.impl.ValidationService;
 
 import java.net.URI;
@@ -25,6 +26,7 @@ public class ClientService {
         this.restTemplate = restTemplate;
     }
 
+    @SneakyThrows
     public StringResponse createClipRef(DefaultUrl url) {
         refService.defValidation(url);
         log.info( url.getUrl() + " is valid");

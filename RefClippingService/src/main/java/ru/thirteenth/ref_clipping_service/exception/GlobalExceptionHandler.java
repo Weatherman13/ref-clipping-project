@@ -5,9 +5,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
-import ru.thirteenth.ref_clipping_service.exception.dao.ClippingRefNotFoundException;
-import ru.thirteenth.ref_clipping_service.exception.dao.DefaultRefNotFoundException;
-import ru.thirteenth.ref_clipping_service.entity.dao.ExceptionDetails;
+import ru.thirteenth.ref_clipping_service.exception.dto.RefNotFoundException;
+import ru.thirteenth.ref_clipping_service.entity.dto.ExceptionDetails;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -19,16 +18,8 @@ import static org.springframework.http.HttpStatus.*;
 @RestControllerAdvice
 public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
 
-    @ExceptionHandler(DefaultRefNotFoundException.class)
+    @ExceptionHandler(RefNotFoundException.class)
     public ResponseEntity<ExceptionDetails>handleDefaultRefNotFoundException(
-            HttpServletRequest request,
-            Exception exception)
-    {
-        return createErrorResponse(request,NOT_ACCEPTABLE,exception);
-    }
-
-    @ExceptionHandler(ClippingRefNotFoundException.class)
-    public ResponseEntity<ExceptionDetails>handleClippingRefNotFoundException(
             HttpServletRequest request,
             Exception exception)
     {

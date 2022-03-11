@@ -4,7 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ru.thirteenth.ref_clipping_service.dao.ClippingRefRepository;
 import ru.thirteenth.ref_clipping_service.entity.ClippingRef;
-import ru.thirteenth.ref_clipping_service.exception.dao.ClippingRefNotFoundException;
+import ru.thirteenth.ref_clipping_service.exception.dto.RefNotFoundException;
 import ru.thirteenth.ref_clipping_service.service.ClippingRefService;
 
 
@@ -21,12 +21,12 @@ public class ClippingRefServiceImpl implements ClippingRefService {
 
     public ClippingRef getByDefaultRef_Url(String url){
         return repository.findByDefaultRef_Url(url)
-                .orElseThrow(()-> new ClippingRefNotFoundException("Short link not found"));
+                .orElseThrow(()-> new RefNotFoundException("Short link not found"));
     }
 
     public ClippingRef getByUrl(String url){
         return repository.findByUrl(url)
-                .orElseThrow(()-> new ClippingRefNotFoundException("Short link not found"));
+                .orElseThrow(()-> new RefNotFoundException("Short link not found"));
     }
 
 

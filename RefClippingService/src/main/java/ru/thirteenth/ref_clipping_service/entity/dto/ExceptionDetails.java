@@ -1,4 +1,4 @@
-package ru.thirteenth.ref_clipping_service.entity.dao;
+package ru.thirteenth.ref_clipping_service.entity.dto;
 
 
 import lombok.AllArgsConstructor;

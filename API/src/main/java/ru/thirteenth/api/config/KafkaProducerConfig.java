@@ -10,7 +10,7 @@ import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.kafka.core.ProducerFactory;
 import org.springframework.kafka.support.converter.StringJsonMessageConverter;
 import org.springframework.kafka.support.serializer.JsonSerializer;
-import ru.thirteenth.api.entity.dao.DefaultUrl;
+import ru.thirteenth.api.entity.dto.DefaultUrl;
 
 import java.util.HashMap;
 import java.util.Map;

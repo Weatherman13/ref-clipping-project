@@ -1,4 +1,4 @@
-package ru.thirteenth.ref_clipping_service.exception.dao;
+package ru.thirteenth.ref_clipping_service.exception.dto;
 
 public class RequestTimeoutExceededException extends RuntimeException{
     public RequestTimeoutExceededException(String message) {

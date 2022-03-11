@@ -9,13 +9,14 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 import ru.thirteenth.ref_clipping_service.entity.ClippingRef;
 import ru.thirteenth.ref_clipping_service.entity.DefaultRef;
-import ru.thirteenth.ref_clipping_service.entity.dao.DefaultUrl;
-import ru.thirteenth.ref_clipping_service.exception.dao.RequestTimeoutExceededException;
+import ru.thirteenth.ref_clipping_service.entity.dto.DefaultUrl;
+import ru.thirteenth.ref_clipping_service.exception.dto.RequestTimeoutExceededException;
 import ru.thirteenth.ref_clipping_service.service.impl.DefaultRefServiceImpl;
 import ru.thirteenth.ref_clipping_service.service.impl.GeneratorServiceImpl;
 
 
 import java.net.URI;
+
 @Slf4j
 @EnableKafka
 @Service
@@ -40,7 +41,7 @@ public class ConsumerService {
 
 
     @KafkaListener(groupId = GROUP_ID, topics = "Topic2", containerFactory = "singleFactory")
-    public void consume(DefaultUrl uri) throws InterruptedException {
+    public void consume(DefaultUrl uri) {
 
         while (true) {
             int counter = 0;
@@ -54,7 +55,11 @@ public class ConsumerService {
                 counter++;
                 if (counter >= 7)
                     throw new RequestTimeoutExceededException("Request timeout exceeded, try again later");
-                Thread.sleep(2000);
+                try {
+                    Thread.sleep(2000);
+                } catch (InterruptedException e) {
+                    log.warn(e.getMessage());
+                }
             }
         }
 
@@ -62,7 +67,7 @@ public class ConsumerService {
 
 
     public void saveToDatabase(DefaultUrl uri) {
-        var clipRefUrl = "http://localhost:8080/api/go-to/"+ generatorService.generate(8);
+        var clipRefUrl = "http://localhost:8080/api/go-to/" + generatorService.generate(8);
         DefaultRef defaultRef = new DefaultRef(uri.getUrl(), uri.getClientToken().toString());
         ClippingRef clippingRef = new ClippingRef(clipRefUrl);
         defaultRef.setClippingRef(clippingRef);

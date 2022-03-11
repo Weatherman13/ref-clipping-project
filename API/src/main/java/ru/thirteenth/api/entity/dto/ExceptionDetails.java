@@ -1,4 +1,4 @@
-package ru.thirteenth.api.entity.dao;
+package ru.thirteenth.api.entity.dto;
 
 
 import lombok.AllArgsConstructor;

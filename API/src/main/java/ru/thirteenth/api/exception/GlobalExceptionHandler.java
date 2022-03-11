@@ -4,8 +4,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
-import ru.thirteenth.api.entity.dao.ExceptionDetails;
-import ru.thirteenth.api.exception.dao.*;
+import ru.thirteenth.api.entity.dto.ExceptionDetails;
+import ru.thirteenth.api.exception.dto.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.ValidationException;
 import java.net.MalformedURLException;
@@ -46,7 +46,7 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
         return createErrorResponse(BAD_REQUEST,exception);
     }
 
-    @ExceptionHandler(DefaultRefNotFoundException.class)
+    @ExceptionHandler(RefNotFoundException.class)
     public ResponseEntity<ExceptionDetails>handleDefaultRefNotFoundException(
             HttpServletRequest request,
             Exception exception)
@@ -54,13 +54,6 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
         return createErrorResponse(NOT_FOUND,exception);
     }
 
-    @ExceptionHandler(ClippingRefNotFoundException.class)
-    public ResponseEntity<ExceptionDetails>handleClippingRefNotFoundException(
-            HttpServletRequest request,
-            Exception exception)
-    {
-        return createErrorResponse(NOT_FOUND,exception);
-    }
 
     @ExceptionHandler(RequestTimeoutExceededException.class)
     public ResponseEntity<ExceptionDetails>handleRequestTimeoutExceededException(

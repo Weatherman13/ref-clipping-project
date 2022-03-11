@@ -3,8 +3,8 @@ package ru.thirteenth.ref_clipping_service.service;
 import lombok.SneakyThrows;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import ru.thirteenth.ref_clipping_service.entity.dao.DefaultUrl;
-import ru.thirteenth.ref_clipping_service.exception.dao.RequestTimeoutExceededException;
+import ru.thirteenth.ref_clipping_service.entity.dto.DefaultUrl;
+import ru.thirteenth.ref_clipping_service.exception.dto.RequestTimeoutExceededException;
 import ru.thirteenth.ref_clipping_service.service.impl.ClippingRefServiceImpl;
 import ru.thirteenth.ref_clipping_service.service.impl.DefaultRefServiceImpl;
 

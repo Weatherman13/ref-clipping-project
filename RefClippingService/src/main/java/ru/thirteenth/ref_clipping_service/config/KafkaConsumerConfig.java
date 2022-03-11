@@ -14,7 +14,7 @@ import org.springframework.kafka.core.ConsumerFactory;
 import org.springframework.kafka.core.DefaultKafkaConsumerFactory;
 import org.springframework.kafka.support.converter.BatchMessagingMessageConverter;
 import org.springframework.kafka.support.converter.StringJsonMessageConverter;
-import ru.thirteenth.ref_clipping_service.entity.dao.DefaultUrl;
+import ru.thirteenth.ref_clipping_service.entity.dto.DefaultUrl;
 
 import java.util.HashMap;
 import java.util.Map;

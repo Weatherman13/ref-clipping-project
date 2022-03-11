@@ -5,8 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ru.thirteenth.ref_clipping_service.dao.DefaultRefRepository;
 import ru.thirteenth.ref_clipping_service.entity.DefaultRef;
-import ru.thirteenth.ref_clipping_service.exception.dao.ClippingRefNotFoundException;
-import ru.thirteenth.ref_clipping_service.exception.dao.DefaultRefNotFoundException;
+import ru.thirteenth.ref_clipping_service.exception.dto.RefNotFoundException;
 import ru.thirteenth.ref_clipping_service.service.DefaultRefService;
 
 
@@ -29,7 +28,7 @@ public class DefaultRefServiceImpl implements DefaultRefService {
     public DefaultRef getDefaultRefByToken(String token){
         return repository.getDefaultRefByClientToken(token)
                          .orElseThrow(()->
-                                 new DefaultRefNotFoundException("A standard link with such parameters was not found"));
+                                 new RefNotFoundException("A standard link with such parameters was not found"));
     }
 
     public Boolean existsByClientToken(String token){
@@ -46,7 +45,7 @@ public class DefaultRefServiceImpl implements DefaultRefService {
 
     public DefaultRef getDefaultRefByClipRef_Url(String url){
         return repository.findDefaultRefByClippingRef_Url(url)
-                .orElseThrow(()->new ClippingRefNotFoundException("No such link was found"));
+                .orElseThrow(()->new RefNotFoundException("No such link was found"));
     }
 
 
